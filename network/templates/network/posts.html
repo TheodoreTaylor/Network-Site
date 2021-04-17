@@ -1,0 +1,95 @@
+{% comment %} list posts {% endcomment %}
+<ul class="list-group">
+    {% for post in posts %}
+        <li class="list-group-item" style="margin-top:5px;">
+            <div class="media">
+                <div></div>
+                <div class="media-body">
+                    <div class="media" style="overflow:visible;">
+                        <div></div>
+                        <div class="media-body" style="overflow:visible;">
+                            <div class="row">
+                                <div class="col-md-12 text-monospace text-primary text-center">
+                                    <p class="text-monospace text-center" style="margin-bottom: 2px;"">
+                                    {% if user.id == post.user_id %}
+                                        <span class="content-box" style="display: none;" id="edit-box-{{ post.id }}">
+                                    <textarea id="text_area{{ post.id }}" rows="1" cols="30"></textarea>
+                                    </span>
+                                    {% endif %}
+                                    <span class="content-box" id="content-box-{{ post.id }}">
+<a href="/profile/{{ post.user_id }}">{{ post.user }}<a>: <span id="content_{{ post.id }}">{{ post.content }}</span>
+                                    </span>
+                                    <br><small class="text-muted"> &nbsp; <span
+                                        id="created_updated{{ post.id }}">{{ post.created_or_modified }}</span>.&nbsp;
+                                    likes:
+
+                                    <span id="like_number_{{ post.id }}">{{ post.get_number_of_likes }} </span>
+                                    {% if user.is_authenticated %}
+                                        {% if user.id == post.user_id %}
+                                            <span class="edit_button" id="edit_button{{ post.id }}"
+                                                  data-post="{{ post.id }}" data-user="{{ user.id }}">[edit]
+                                                    </span>
+                                            <span style="display: none;" class="cancel_button"
+                                                  id="cancel_button{{ post.id }}" data-post="{{ post.id }}"
+                                                  data-user="{{ user.id }}">[cancel]</span>
+                                            <span style="display: none;" class="submit_button"
+                                                  id="submit_button{{ post.id }}" data-post="{{ post.id }}"
+                                                  data-user="{{ user.id }}">[submit]</span>
+
+                                        {% else %}
+                                            <span class="like_button" id="like_text_{{ post.id }}"
+                                                  data-post="{{ post.id }}" data-user="{{ user.id }}">
+                                                    {% if post in liked_posts %}
+                                                        [<strike>like</strike>]
+                                                    {% else %}
+                                                        [like]
+                                                        </span>
+                                                    {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+{% comment %} pagination {% endcomment %}
+
+<ul class="list-group">
+    <li class="list-group-item" style="margin-top:5px;">
+        <div class="media">
+            <div></div>
+            <div class="media-body">
+                <div class="media" style="overflow:visible;">
+                    <div></div>
+                    <div class="media-body" style="overflow:visible;">
+                        <div class="row">
+                            <div class="col-md-12 text-monospace">
+                                <p class="text-monospace text-center">
+                                    {% if posts.has_other_pages %}
+                                        {% if posts.has_previous %}
+                                            <a href="?page={{ posts.previous_page_number }}">previous.</a>
+                                        {% else %}
+                                            <span>previous.</span>
+                                        {% endif %}
+                                        <span> </span>
+                                        {% if posts.has_next %}
+                                            <a href="?page={{ posts.next_page_number }}">next.</a>
+                                        {% else %}
+                                            <span>next.</span>
+                                        {% endif %}
+                                    {% endif %}
+                                    <br></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

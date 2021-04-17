@@ -1,0 +1,34 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div class="row" id="profile header">
+        <div class="col">
+            <div class="card" style="padding-top: 5px;padding-bottom: 5px;">
+                <h1 class="text-monospace text-center" style="margin-left: 15px;margin-right: 15px;">
+                    {% if user != viewed_user %}
+                        <strong>{{ viewed_user.username }}</strong>{% else %}
+                        <strong>{{ viewed_user.username }}</strong>{% endif %}</h1>
+                <div class="card-body text-center" style="padding-bottom: 0px;padding-top: 0px;">
+                    <p class="text-monospace text-center card-text" style="margin-bottom: 13px;">followers
+                        : <span id="number_of_followers">{{ viewed_user.get_number_of_followers }}</span>&nbsp;
+                        &nbsp;following: {{ viewed_user.get_number_of_other_users_followed }}</p>
+                    {% if user.is_authenticated %}
+                        {% if user != viewed_user %}
+                            {% load static %}
+                            <script src="{% static 'network/follow.js' %}"></script>
+                            <button class="btn btn-primary btn-sm text-monospace" id="follow_button" type="button"
+                                    data-user="{{ viewed_user.id }}" data-follower="{{ user.id }}"
+                                    style="margin-bottom: 13px;"><span id="follow_strike"
+                                                                       style={{ style }}>follow</span>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'network/posts.html' %}
+    {% load static %}
+    <script src="{% static 'network/edit.js' %}"></script>
+{% endblock %} 

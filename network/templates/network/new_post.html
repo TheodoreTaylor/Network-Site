@@ -1,0 +1,12 @@
+<div id="new_post" class="d-flex justify-content-center">
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {% for field in post_form %}
+            {{ field }}
+        {% endfor %}
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-primary btn-sm text-monospace" type="submit" style="margin-bottom: 13px;">new post
+            </button>
+        </div>
+    </form>
+</div>
