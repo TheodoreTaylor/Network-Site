@@ -21,7 +21,7 @@ function follow(user, follower) {
   data = JSON.stringify(variables);
 
   /* send post request to 'follow' view in django */
-  response = fetch("/follow", {
+  fetch("/follow", {
     method: "POST",
     body: data,
     headers: { "X-CSRFToken": csrftoken },
@@ -30,7 +30,7 @@ function follow(user, follower) {
     .then((data) => {
       console.log(data);
       /* check if operation failed */
-      if (data["operation"] == "failure") {
+      if (data["status"] === "403") {
         return false;
       } else {
         /* update html to dislay whether user is now 'following' (or not)*/

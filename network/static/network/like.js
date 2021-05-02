@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function like(post, user) {
 
-    /* get csrf token in order to autherize post requests */
+    /* get csrf token in order to authorize post requests */
     const csrftoken = getCookie("csrftoken");
 
     /* package variables together */
@@ -21,27 +21,27 @@ function like(post, user) {
     };
 
     /* turn into json */
-    data = JSON.stringify(variables);
+    let data = JSON.stringify(variables);
 
     /* send post request to 'like' view in django */
-    response = fetch("/like", {
+    fetch("/like", {
         method: "POST",
         body: data,
-        headers: { "X-CSRFToken": csrftoken },
+        headers: {"X-CSRFToken": csrftoken},
     })
         .then(response => response.json())
         .then((data) => {
-          /* check if operation failed */
-          if (data["operation"] == "failure") {
-            return false;
+            /* check if operation failed */
+            if (data["status"] === "403") {
+                return false;
             } else {
-              /* update html to dislay that post is 'liked' */
-              document.getElementById(`like_text_${post}`).innerHTML =
-                data["status"];
-              /* update html to dislay total number of likesv a post has */
-              document.getElementById(`like_number_${post}`).innerHTML =
-                data["likes"];
-              return false;
+                /* update html to display that post is 'liked' */
+                document.getElementById(`like_text_${post}`).innerHTML =
+                    data["text"];
+                /* update html to display total number of likes a post has */
+                document.getElementById(`like_number_${post}`).innerHTML =
+                    data["likes"];
+                return false;
             }
         })
 

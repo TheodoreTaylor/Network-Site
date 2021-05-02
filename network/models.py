@@ -99,7 +99,7 @@ class Post(TimestampedBaseModel):
     def get_number_of_likes(self):
         return Like.objects.filter(post_id=self.id).count()
 
-    """ returns a string showing latest interaction and whether it was a creation or edit  """
+    # returns a string showing latest interaction and whether it was a creation or edit
 
     def created_or_modified(self):
         created = self.created_at.strftime('%d-%m-%Y %H:%M')
@@ -115,7 +115,7 @@ class Like(TimestampedBaseModel):
     Class for registering 'likes' on user posts
     """
 
-    """ link to the post """
+    # link to the post
     post = models.ForeignKey(
         'Post',
         related_name='likes',
@@ -123,7 +123,7 @@ class Like(TimestampedBaseModel):
         on_delete=models.CASCADE
     )
 
-    """ link to the user liking the post """
+    # link to the user liking the post
     related_user = models.ForeignKey(
         'User',
         related_name='liked',
@@ -148,7 +148,7 @@ class Follow(TimestampedBaseModel):
     Class for registering choices to 'follow' specific users
     """
 
-    """ account being followed """
+    # Account being followed
     user = models.ForeignKey(
         'User',
         related_name='followers',
@@ -156,7 +156,7 @@ class Follow(TimestampedBaseModel):
         on_delete=models.CASCADE
     )
 
-    """ user who is following """
+    # user who is following
     follower = models.ForeignKey(
         'User',
         related_name='following',

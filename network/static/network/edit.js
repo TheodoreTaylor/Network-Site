@@ -85,7 +85,7 @@ function submit_edit(post) {
   data = JSON.stringify(variables);
 
   /* send post request to 'follow' view in django */
-  response = fetch("/edit", {
+  fetch("/edit", {
     method: "POST",
     body: data,
     headers: { "X-CSRFToken": csrftoken },
@@ -93,7 +93,7 @@ function submit_edit(post) {
     .then((response) => response.json())
     .then((data) => {
       /* check if operation failed & show warning message */
-      if (data["operation"] == "failure") {
+      if (data["status"] == "403") {
         document.getElementById(`text_area${post}`).value =
           '  FAILED_403: "YOU != AUTHOR"';
       } else {

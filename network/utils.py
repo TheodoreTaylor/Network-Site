@@ -6,8 +6,6 @@ def varified_user(request, account_requested):
     requester = str(request.user.id)
     if requester == str(account_requested):
         return True
-    else:
-        return False
 
 
 def paginate(request, post_list):
