@@ -30,8 +30,7 @@ def paginate(request, post_list):
 
 def users_liked_posts(request):
     """ gets a list of liked posts if the user is logged in, allowing the front end to mark posts as liked/unliked """
+    liked_posts = ""
     if request.user.is_authenticated:
         liked_posts = request.user.get_liked_posts()
-    else:
-        liked_posts = ""
     return liked_posts
